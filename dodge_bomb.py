@@ -29,7 +29,7 @@ def check_bound(rct: pg.Rect):
     return yoko, tate
 
 
-def gameover(screen: pg.Surface):
+def gameover(screen: pg.Surface) -> None:
     go_img = pg.Surface((1100,650))
     pg.draw.rect(go_img, (0,0,0), (0,0,1100,650))
     go_img.set_alpha(200)
@@ -60,6 +60,21 @@ def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
     return(bb_imgs,bb_accs)
 
 
+def get_kk_imgs() -> dict[tuple[int, int], pg.Surface]:
+    kk_dict = {
+        ( 0, 0): pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9),
+        (+5, 0): pg.transform.rotozoom(pg.image.load("fig/3.png"), 45, 0.9),
+        (+5,-5): pg.transform.rotozoom(pg.image.load("fig/3.png"), 90, 0.9),
+        ( 0,-5): pg.transform.rotozoom(pg.image.load("fig/3.png"), 135, 0.9),
+        (-5,-5): pg.transform.rotozoom(pg.image.load("fig/3.png"), 180, 0.9),
+        (-5, 0): pg.transform.rotozoom(pg.image.load("fig/3.png"), 225, 0.9),
+        (-5,+5): pg.transform.rotozoom(pg.image.load("fig/3.png"), 270, 0.9),
+        ( 0,+5): pg.transform.rotozoom(pg.image.load("fig/3.png"), 315, 0.9),
+        (+5,+5): pg.transform.rotozoom(pg.image.load("fig/3.png"), 360, 0.9),
+    }
+    return(kk_dict)
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -76,6 +91,7 @@ def main():
     clock = pg.time.Clock()
     tmr = 0
     bb_imgs,bb_accs=init_bb_imgs()
+    kk_imgs=get_kk_imgs()
     while True:
         for event in pg.event.get():
             if event.type == pg.QUIT: 
@@ -103,6 +119,8 @@ def main():
         kk_rct.move_ip(sum_mv)
         if check_bound(kk_rct) != (True, True):  # 画面外なら
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])  # 移動を無かったことにする
+        kk_img = kk_imgs[tuple(sum_mv)]
+        kk_img = pg.transform.flip(kk_img, True, False
         screen.blit(kk_img, kk_rct)
         avx = vx*bb_accs[min(tmr//500, 9)]
         avy = vy*bb_accs[min(tmr//500, 9)]
