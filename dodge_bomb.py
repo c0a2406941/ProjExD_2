@@ -30,6 +30,11 @@ def check_bound(rct: pg.Rect):
 
 
 def gameover(screen: pg.Surface) -> None:
+    """
+    引数：screen
+    戻り値：なし
+    ゲームオーバー画面を表示する
+    """
     go_img = pg.Surface((1100,650))
     pg.draw.rect(go_img, (0,0,0), (0,0,WIDTH,HEIGHT))
     go_img.set_alpha(200)
@@ -50,6 +55,11 @@ def gameover(screen: pg.Surface) -> None:
 
 
 def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
+    """
+    引数：なし
+    戻り値：タプル(bb_imgsとbb_accsのリスト)
+    bb_imgsはSurfaceのリストで、bb_accsは数値のリスト
+    """
     bb_imgs = []
     bb_accs = [a for a in range(1,11)]
     for r in range(1,11):
@@ -61,6 +71,10 @@ def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
 
 
 def get_kk_imgs() -> dict[tuple[int, int], pg.Surface]:
+    """
+    引数：なし
+    戻り値：辞書（移動量の合計値タプルがキー,rotozoomしたsurfaceが値）
+    """
     kk_dict = {
         ( 0, 0): pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9),
         (+5, 0): pg.transform.rotozoom(pg.image.load("fig/3.png"), 45, 0.9),
