@@ -31,7 +31,7 @@ def check_bound(rct: pg.Rect):
 
 def gameover(screen: pg.Surface) -> None:
     go_img = pg.Surface((1100,650))
-    pg.draw.rect(go_img, (0,0,0), (0,0,1100,650))
+    pg.draw.rect(go_img, (0,0,0), (0,0,WIDTH,HEIGHT))
     go_img.set_alpha(200)
     fonto = pg.font.Font(None,80)
     txt = fonto.render("Game Over",True,(255,255,255))
@@ -120,7 +120,7 @@ def main():
         if check_bound(kk_rct) != (True, True):  # 画面外なら
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])  # 移動を無かったことにする
         kk_img = kk_imgs[tuple(sum_mv)]
-        kk_img = pg.transform.flip(kk_img, True, False
+        kk_img = pg.transform.flip(kk_img, True, False)
         screen.blit(kk_img, kk_rct)
         avx = vx*bb_accs[min(tmr//500, 9)]
         avy = vy*bb_accs[min(tmr//500, 9)]
